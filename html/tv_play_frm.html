@@ -1,0 +1,791 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+<style type="text/css">
+       html,body{background-color:#efefef;}
+
+.aui-tabBar {
+    width: 100%;
+    position: relative;
+    z-index: 100;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 54px;
+    background-color: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -11px 32px rgba(0,0,0,.08);
+}
+
+.aui-tabBar:before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    height: 1px;
+    width: 100%;
+    background: rgba(0,0,0,.08);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(.66667);
+    transform: scaleY(.66667);
+}
+
+.aui-tabBar-item {
+    background: #fff;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #979797;
+    height: 54px;
+}
+
+.aui-tabBar-item a {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    height: 54px;
+}
+
+.aui-tabBar-item a img {
+    display: block;
+    margin: 9px auto 4px;
+    width: 20px;
+}
+
+.aui-tabBar-item a h4 {
+    color: #9a9a9a;
+    font-size: 27px;
+    height: 40px;
+    position: relative;
+    width: 300%;
+    left: -100%;
+    line-height: 40px;
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webkit-transform: scale(.33333);
+    transform: scale(.33333);
+}
+
+.aui-tabBar ul {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.active {
+    background: linear-gradient(0deg,hsla(0,0%,100%,.05),rgba(0,0,0,.05));
+    position: relative;
+    box-shadow: inset 5px 0 3px -3px rgba(0,0,0,.01), inset -5px 0 3px -3px rgba(0,0,0,.01);
+}
+
+.active:before {
+    content: "";
+    width: 1px;
+    position: absolute;
+    top: -25%;
+    height: 150%;
+    left: 0;
+    -webkit-transform: scale(.66667);
+    transform: scale(.66667);
+    background: linear-gradient(0deg,hsla(0,0%,100%,.03),rgba(0,0,0,.03));
+}
+
+.active:after {
+    content: "";
+    width: 1px;
+    position: absolute;
+    top: -25%;
+    height: 150%;
+    right: 0;
+    -webkit-transform: scale(.66667);
+    transform: scale(.66667);
+    background: linear-gradient(0deg,hsla(0,0%,100%,.03),rgba(0,0,0,.03));
+}
+
+.aui-tabBar-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 49;
+}
+
+.aui-class-list-title {
+    padding: 5px 15px;
+    background: #f2efee;
+    width: 100%;
+    position: relative;
+    font-size: 0.7rem;
+}
+
+.aui-class-list-title:before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #e1e0de;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.aui-class-list-title:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid #e1e0de;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+
+.aui-class-list-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 30%;
+    float: left;
+    position: relative;
+    z-index: 0;
+    height: 60px;
+	margin-left: 3%;
+}
+
+
+.aui-class-list-item:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 0px solid #e1e0de;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+
+.aui-class-list-box {
+    background: #fff;
+    overflow: hidden;
+}
+
+.aui-cell-fl img {
+    width: 25px;
+    margin-right: 15px;
+    display: block;
+    border: none;
+	border-radius: 3rem;
+}
+
+.aui-cell-fr {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    color: #fff;
+    font-size: 0.6rem;
+}
+
+.aui-cell-tr {
+    padding-right: 13px;
+    position: relative;
+}
+.wz {
+       margin: 0 auto;
+    width: 96%;
+    font-size: 10px;
+    background-color: #ffeb3c;
+    border-radius: 0.1rem;
+    height: 20px;
+    margin-top: 10px;
+	text-align: center;
+	color: #4e4e4c;
+}
+
+.aui-cell-tr:after {
+    content: " ";
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #c8c8cd00;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: relative;
+    top: -2px;
+    position: absolute;
+    top: 50%;
+    margin-top: -4px;
+    right: 0;
+    border-radius: 1px;
+}
+    </style>
+	
+</head>
+<body style="background-color:#efefef;">
+
+<div id="playercontainer"></div>
+<br>
+
+
+
+
+
+
+
+
+<div class="play" style="margin-top: 10px;">
+    <a  onclick="Fx()" class="aui-class-list-item">
+                <div class="aui-cell-fl">
+                    <img src="../image/d_01.png" alt="">
+                </div>
+                <div class="aui-cell-fr">分享推荐</div>
+            </a>  
+			<a  onclick="Tp()" class="aui-class-list-item">
+                <div class="aui-cell-fl">
+                    <img src="../image/d_02.png" alt="">
+                </div>
+                <div class="aui-cell-fr">投屏帮助</div>
+            </a>    
+			<a  id="play" onclick="jieXi()" class="aui-class-list-item">
+                <div class="aui-cell-fl">
+                    <img src="../image/d_03.png" alt="">
+                </div>
+                <div class="aui-cell-fr">积分兑换</div>
+            </a>
+</div>
+<div class="wz">影片中出现的文字广告请勿相信，谨防上当受骗！</div>
+
+
+
+
+
+<!--
+
+<div class="aui-tab" style=" background: #fff; ">
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">
+                <div class="tab-item">
+                    <a class="aui-flex b-line">
+
+                        <div class="aui-flex-box">
+                          <p>
+                              <em class="aui-group-three" style=" font-size: 12px; "> 最新热门电影推荐</em>
+                          </p>
+
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+-->
+
+
+    <!-- 视频列表 -->
+    <!--
+  <div class="v-list-wrap" id="liveList">
+    <ul class="clearfix" id="div_list">
+
+    </ul>
+  </div>
+-->
+  <!-- 视频列表 end-->
+
+</body>
+<!--  影片推荐-->
+<!--
+<script type="text/x-dot-template" id="template">
+{{~ it.msg : value : index }}
+    <li onclick="openWin('{{= value. url }}')">
+      <div class="video-mask-box">
+        <img src="{{= value. img }}" alt="" class="game-pic">
+      </div>
+      <div class="til">{{= value. title }}</div>
+
+    </li>
+{{~}}
+</script>
+-->
+
+<script type="text/x-dot-template" id="flicotpl">
+  {{~ it.data : value : index }}
+  		<div class="aui-col-xs-3 pt-list" style="border-bottom: 0.06rem solid #2A282B;border-right: 0.06rem solid #2A282B;" tapmode onclick="toBanner('{{= value. linkurl }}')">
+          <i class="aui-iconfont"><img src="http://ys.lshang.cn/{{= value. picurl }}"/></i>
+          <div class="aui-grid-label" style="color: #D6B686;">{{= value. name }}</div>
+        </div>
+
+  {{~}}
+</script>
+<script type="text/x-dot-template" id="guanggaotpl">
+  {{~ it.data : value : index }}
+
+
+  <div  class="aui-slide-wrap" style="margin: 10px;border-radius:0.5rem;box-shadow:0.1rem 0.1rem 0.4rem rgba(99, 99, 99, 0.3);" >
+
+                      <img  src="http://ys.lshang.cn/{{= value. picurl }}"  tapmode onclick="toBanner('{{= value. linkurl }}')">
+
+  </div>
+
+  {{~}}
+</script>
+
+<script type="text/javascript" src="../script/api.js" ></script>
+<script src="../script/cyberplayer.js"></script>
+<script src="../script/video.min.js"></script>
+<script src="../script/videojs-contrib-hls.min.js"></script>
+<script src="../script/videojs-contrib-quality-levels.min.js"></script>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+
+<script type="text/javascript">
+  var api_url = localStorage.getItem('api_url');
+
+  /////  初始化执行   S /////
+  /////  apiready  一打开就执行的 函数
+  apiready = function(){
+
+/////// 播放器加载  s ////////
+    var player = cyberplayer("playercontainer").setup({
+        width: api.winWidth,
+		height: 300,
+        file: api.pageParam.video, // <—rtmp or flv直播地址
+        fallbackfile: api.pageParam.video, // <— 备用播放地址，为了手机上能进行直播，设置hls直播流
+        controlbar: {
+            barLogo: false,
+            autostart: true
+        },
+        stretching: "uniform",
+        volume: 100,
+        controls: true,
+        ak: "dfd6c7951d4c477bb2555496c8e97166" // 公有云平台注册即可获得accessKey
+    });
+
+    player.play();
+
+    player.on('fullscreen', function (ret) {
+         //alert( JSON.stringify( ret ) );
+         if (ret.fullscreen) {
+           api.setScreenOrientation({
+               orientation: 'landscape_right'
+           });
+         }else {
+           api.setScreenOrientation({
+               orientation: 'portrait_up'
+           });
+         }
+    });
+
+    api.addEventListener({
+        name: 'keyback'
+    }, function(ret, err) {
+      api.setScreenOrientation({
+          orientation: 'portrait_up'
+      });
+      api.closeWin();
+    });
+/////// 播放器加载  E ////////
+
+
+//////////   获取 推荐影片数据  S  /////
+/*    api.showProgress({
+        title: '加载中...',
+        modal: false
+    });
+    var div_list = $api.byId('div_list');
+    var template = $api.byId('template');
+    api.ajax({
+        url: 'http://ys.lshang.cn/login/login/tjlist.html',
+        method: 'get'
+    },function(ret, err){
+        if (ret) {
+          //alert( JSON.stringify( ret ) );
+          var pagefn = doT.template(template.text);
+          div_list.innerHTML = pagefn(ret);
+          api.hideProgress();
+        } else {
+          api.hideProgress();
+            //alert( JSON.stringify( err ) );
+        }
+    });
+    */
+//////////   获取 推荐影片数据  E  /////
+
+
+
+//获取信息
+    api.parseTapmode();
+
+  getNav();
+
+
+
+  }
+
+/////  初始化执行   E /////
+
+
+
+//////////////////////   播放器下方推荐影片打开  方法    openWin     S //////////////////////
+/*
+  function openWin(name){
+        var delay = 0;
+        if(api.systemType != 'ios'){
+            delay = 300;
+        }
+        api.openWin({
+            name: 'vplay_win',
+            url: 'vplay_win.html',
+            bounces:false,
+            delay: delay,
+            slidBackEnabled:true,
+            vScrollBarEnabled:false,
+            pageParam:{video:name}
+        });
+    }
+    */
+//////////////////////   播放器下方推荐影片打开  方法    openWin     E //////////////////////
+
+
+
+
+
+    //////////////////////    广告图片获取  方法  getNav  S  //////////////////////
+      function getNav(){
+        var flid = $api.byId('fl_list');
+        var fltpl = $api.byId('flicotpl');
+        var guanggaoid = $api.byId('guanggao');
+        var guanggaotpl = $api.byId('guanggaotpl');
+        api.ajax({
+            url: api_url+'/app/nav/fl',
+            method: 'get',
+        },function(ret, err){
+            if (ret) {
+              //渲染模板
+              var pagefn = doT.template(fltpl.text);
+              flid.innerHTML = pagefn(ret.tu);
+
+              var pagefn = doT.template(guanggaotpl.text);
+              guanggaoid.innerHTML = pagefn(ret.guanggao);
+    //        alert( JSON.stringify( ret.banner ) );
+
+
+            } else {
+              /*
+                alert( '网络错误' );
+                api.hideProgress();
+                */
+            }
+        });
+      }
+
+    //////////////////////    轮播图获取  方法  getNav  E  //////////////////////
+
+
+
+
+
+
+
+    ///////广告图片 和小图标广告 点击访问 方法    imgUrl   S   ///////
+    /*  function imgUrl(img){
+        if (img=='img1') {
+          api.openWin({
+              name: 'h5',
+              url: './h5.html',
+              pageParam: {
+                  url: localStorage.getItem('fxurl1')
+              }
+          });
+        }else {
+          api.openWin({
+              name: 'h5',
+              url: './h5.html',
+              pageParam: {
+                  url: img
+              }
+          });
+        }
+
+      }*/
+
+    //// ↑ ↑ ↑ ↑ ↑原方法  ↑ ↑ ↑ ↑ ↑////
+    function imgUrl(url){
+
+
+
+          if (url == '') {
+
+
+            api.toast({
+                msg: '(#^.^#) 该项目暂未上线'
+            });
+
+          }else {
+
+
+            //网络连接判断S
+
+
+                                api.ajax({
+                                    url: api_url+'/login/login/banben.html',
+                                    method: 'get'
+                                },function(ret, err){
+                                    if (ret) {
+
+                                                 //网络正常   跳转
+
+
+
+
+
+                                                       /*
+                                                       api.showProgress({
+                                                           title: 'VIP登录中',
+                                                           modal: false
+                                                       });
+                                                 */
+                                                 api.toast({
+                                                     msg: '加载中'
+                                                 });
+
+
+
+                                                 api.openWin({
+                                                     name: 'h5',
+                                                     url: './h5.html',
+                                                     pageParam: {
+                                                         url: url
+                                                     }
+                                                 });
+
+
+
+
+
+                                    } else {
+
+                                                //网络连接失败 进行提示
+                                                NetworkConnectionFailurePrompt();
+
+                  }
+
+
+              });
+        //网络连接判断E
+
+          }
+
+
+
+    }
+    ///////广告图片 和小图标广告 点击访问 方法    imgUrl   E   ///////
+
+
+
+    ///////访问轮播地址 方法    toBanner   S   ///////
+    function toBanner(url){
+
+      if (url == '') {
+
+
+        api.toast({
+            msg: '(#^.^#) 该项目暂未上线'
+        });
+
+      }else {
+
+
+        //网络连接判断S
+
+
+                            api.ajax({
+                                url: api_url+'/login/login/banben.html',
+                                method: 'get'
+                            },function(ret, err){
+                                if (ret) {
+
+                                             //网络正常   跳转
+
+
+
+
+
+                                                   /*
+                                                   api.showProgress({
+                                                       title: 'VIP登录中',
+                                                       modal: false
+                                                   });
+                                             */
+                                             api.toast({
+                                                 msg: '加载中'
+                                             });
+
+
+
+                                                   api.openWin({
+                                                       name: 'h5',
+                                                       url: './h5.html',
+                                                       pageParam: {
+                                                           url: url
+                                                       }
+                                                   });
+
+
+
+
+                                } else {
+
+                                            //网络连接失败 进行提示
+                                            NetworkConnectionFailurePrompt();
+
+              }
+
+
+          });
+    //网络连接判断E
+
+      }
+    }
+
+    ///////访问轮播地址 方法    toBanner   E   ///////
+
+
+
+
+//////////////////////   直播室网络成功  方法    Dingshi    定时     S //////////////////////
+//定时执行数据加载
+var DingshiTimer = setInterval(function(){
+    Dingshi();
+},10000)
+
+
+//判断是否服务器通信成功
+function Dingshi() {
+
+  api.ajax({
+      url: api_url+'/login/login/banben.html',
+      method: 'get'
+  },function(ret, err){
+      if (ret) {
+
+                                                          //连接成功
+
+      } else {
+
+                                                      //连接失败
+
+                                                      api.toast({
+                                                          msg: '网络不稳定',
+                                                          duration: 2000
+                                                      });
+
+
+
+      }
+
+  });
+
+
+
+
+}
+
+
+
+
+
+//////////////////////   直播室网络成功  方法    Dingshi    定时     E //////////////////////
+/////  分享推荐 /////
+    function Fx(){
+
+            api.openWin({
+               name: 'share_win',
+            url: 'share_win.html',
+            });
+}
+
+       
+/////  分享推荐 /////
+/////  投屏帮助 /////
+    function Tp(){
+
+            api.openWin({
+               name: 'tp',
+            url: 'tp_win.html',
+            });
+}
+
+       
+/////  投屏帮助 /////
+/////  积分兑换 /////
+    function jieXi(){
+
+            api.openWin({
+               name: 'jifen_win',
+            url: 'jifen_win.html',
+            });
+}
+
+       
+/////  积分兑换 /////
+
+
+</script>
+
+
+
+
+</html>

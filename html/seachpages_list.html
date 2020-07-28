@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+		body{
+
+		}
+		.list{
+		}
+		.list li{
+			box-sizing: border-box;
+			height:73px;
+			width:100%;
+			border-bottom:1px solid #f0f0f0;
+			padding-left:80px;
+		}
+		.left{
+			float:left;
+			width:80px;
+			height:100%;
+			margin-left:-80px;
+		}
+		.logo_frame{
+			width:46px;
+			height:46px;
+			margin-top:17px;
+			margin-left:17px;
+			overflow: hidden;
+		}
+		.logo_frame img{
+			width:100%;
+		}
+		.info{
+			float:left;
+			width:100%;
+
+		}
+		.list_title{
+			box-sizing: border-box;
+			padding-right:10px;
+			margin-top:8px;
+			width:95%;
+			overflow:hidden;
+			font-size:15px;
+			line-height:40px;
+			font-family: '黑体';
+			min-height:40px;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space:nowrap;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		}
+		.list_date{
+			margin-top:0px;
+			font-size:14px;
+			color:#767676;
+		}
+		.empty{
+			width:100%;
+			height:30px;
+			line-height:20px;
+			font:14px;
+			text-align:center;
+			margin-top:10px;
+
+		}
+
+
+	/*新加空提示信息*/
+
+	.m-noRecord {
+    padding: .395rem 0 0;
+    text-align: center;
+}
+
+.m-noRecord .c-icon-noRecord {
+    background: url(../image/app/Browsehistory.png) no-repeat;
+    background-size: cover;
+		width: 5rem;
+    height: 4.6rem;
+    /* margin: .485rem auto 0; */
+    margin: 0 auto;
+	  margin-top: 50px;
+		opacity:0.4;    /*图片透明度*/
+		filter:alpha(opacity=40); /* 针对 IE8 以及更早的版本 */
+}
+.m-noRecord .c-info {
+    color: #cecfce;
+    line-height: 4rem;
+    padding: .25rem 0;
+    font-size: .8rem;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="aui-searchbar" id="search" style="background-image: url(../image/b_02.png);height: 100px;">
+    <div style="border-radius: 5rem;height: 1.7rem;line-height: 1.7rem;background: rgba(0,0,0,.06);" class="aui-searchbar-input aui-border-radius">
+      <i class="aui-iconfont aui-icon-search"></i>
+      <input style="width: 100%;height: 1.7rem;" type="text" placeholder="输入关键词搜索" id="ff_wd">
+    <div class="aui-btn aui-btn-info aui-btn-block" tapmode="" onclick="toSearch()" style="width: 50px;height: 1.7rem;line-height: 1.7rem;font-size: 0.6rem;position: absolute;margin-left: -3.4rem;border-radius: 0 5rem 5rem 0;    background: linear-gradient(to right,#4f2fff 0,#083dff 100%)">搜索</div>
+</div>  
+  </div>
+ <div class="list-title-l" style="text-align: left;float: unset;">
+ <h2 style="color: #000;font-size: 0.75rem;font-weight: normal;margin-top: 0.7rem;border-bottom: 1px solid #b0b6bfbf;"><img src="../image/a_45.png "/ style="width: 4px;display:  inline;vertical-align: middle;margin-left: 8px;">&nbsp;&nbsp;近期观看记录</h2>
+     </div>
+	<ul id="list" class="list">
+		<script id="list_template" type="text/x-dot-template">
+			<li onclick="go_detail('{{=it.url}}', '{{=it.title}}');">
+				<div class="left">
+					<div class="logo_frame">
+						<img src="{{=it.logo}}" />
+					</div>
+				</div>
+				<div class="info">
+					<div class="list_title">{{=it.title}}</div>
+					<div class="list_date">{{=it.date_str}}</div>
+				</div>
+			</li>
+		</script>
+	</ul>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/date.min.js"></script>
+<script type="text/javascript">
+    var jx_url2 = localStorage.getItem('jx_url2');
+	var list_template;
+	apiready = function(){
+		list_template = $("#list_template").text();
+		update();
+
+	};
+
+	function update(){
+		api.ajax({
+	        url:'http://ys.lshang.cn/login/login/newjilu?uid=' + localStorage.getItem('user_id')
+        },function(ret,err){
+        	//coding...
+        	if(ret.code==0){
+        		//$("#list").empty();
+      //  		$("#list").html('<div  class="empty">'+ ret.msg +'</div>');
+ 		$("#list").html('<section class="m-noRecord"><div class="c-icon-noRecord"></div> <div class="c-info">看过的那些精彩视频会保存在这里</div></section>');
+
+
+
+        		return;
+        	}
+
+
+        	var array = ret.msg;
+        	//alert(JSON.stringify(ret));
+        	for(var i=0;i<array.length;i++){
+        		var p = array[i];
+        		if(p.ping =="优酷"){
+        			p["logo"] = "../image/jilu_logo/youku.png"
+        		}else if(p.ping == "爱奇艺"){
+        			p["logo"] = "../image/jilu_logo/iqiyi.png"
+      			}else if(p.ping == "腾讯"){
+        			p["logo"] = "../image/jilu_logo/tengxun.png"
+						}else if(p.ping == "搜狐"){
+							p["logo"] = "../image/jilu_logo/sohu.png"
+						}else if(p.ping == "PPTV"){
+							p["logo"] = "../image/jilu_logo/ppv.png"
+						}else if(p.ping == "芒果"){
+							p["logo"] = "../image/jilu_logo/mgtv.png"
+						}else if(p.ping == "M1905"){
+							p["logo"] = "../image/jilu_logo/m1905.png"
+						}else if(p.ping == "暴风"){
+							p["logo"] = "../image/jilu_logo/baofeng.png"
+						}else if(p.ping == "乐视"){
+							p["logo"] = "../image/jilu_logo/letv.png"
+						}else if(p.ping == "风行"){
+							p["logo"] = "../image/jilu_logo/fengxing.png"
+						}else if(p.ping == "未知"){
+							p["logo"] = "../image/jilu_logo/weizhi.png"
+        		}
+        		var date_str = "";
+        		try{
+        			var date = new Date();
+        			date.setTime(p.time*1000);
+        			date_str = date.format('MM-dd hh:mm');
+        		}catch(e){
+        		}
+        		p["date_str"] = date_str;
+
+        	}
+
+	   		var text = "";
+
+			for(var i=0;i<array.length;i++){
+				var p = array[i];
+				text = text + doT.template(list_template)(p);
+			}
+			$("#list").html(text);
+
+
+        });
+	}
+
+	function go_detail(dataurl2, page_title){
+		api.openWin({
+           name: 'play_win',
+           url: './play_win.html',
+           delay: 300,
+           pageParam:{
+           		url:jx_url2+dataurl2,
+           		srcUrl:dataurl2,
+           		title:page_title,
+           		needRecordHistory: false
+           	},
+           //pageParam:{url:dataurl2},
+           bgColor: '#000000'
+       });
+	}
+/////  搜索功能 /////
+    function toSearch(){
+      var sys = api.systemType;
+      var myval = document.getElementById('ff_wd').value;
+      // alert(myval);
+      // alert(112);
+
+      var time = localStorage.getItem('user_time');
+      var timestamp = Date.parse(new Date())/1000;
+      var user_id = localStorage.getItem('user_id');
+      var username = localStorage.getItem('user_name');
+      if(user_id<1){
+        /*新提示*/
+        api.toast({
+            msg: '亲爱的，你还没用登录哦！',
+            duration: 5000
+        });
+        api.openWin({
+            name: 'login',
+            url: './login.html',
+            delay: 2000
+        });
+        return;
+
+      }
+      if (time>timestamp||time==-1) {
+
+            api.openWin({
+                name: 'video_win',
+                url: './video_win.html',
+                pageParam: {
+                    url: 'https://m.iqiyi.com/search.html?source=input&key='+myval 
+                }
+            });
+
+      }else {
+        VipExpiredHint();
+      }
+
+    }   
+/////  搜索功能 /////
+	/////////////清除观看记录 方法  clearR   S   ////////////
+	function clearR(){
+
+		api.ajax({
+	        url:'http://ys.lshang.cn/login/login/deljilu?uid=' + localStorage.getItem('user_id')
+        },function(ret,err){
+        	//coding...
+        });
+        api.execScript({
+        	frameName: "look_record_list",
+	        script: 'update();'
+        });
+	}
+	/////////////清除观看记录 方法  clearR   E   ////////////
+
+
+	/////////////关闭页面 方法  closeWin   S   ////////////
+	function closeWin(){
+		api.closeWin();
+	}
+	/////////////关闭页面 方法  closeWin   E   ////////////
+
+
+
+	/////////////清除记录弹窗确认 方法  clearR_Confirm   S   ////////////
+	function clearR_Confirm(){
+
+		/*代理升级客服弹窗提示结束*/
+		var dialogBox = api.require('dialogBox');
+		dialogBox.alert({
+				tapClose: true,  //描述：（可选项）是否点击遮罩层关闭该对话框  默认值：false
+				texts: {
+						content: '是否确认清空观看记录',
+					  leftBtnTitle: '我在想想',
+						rightBtnTitle: '确认清空'
+				},
+				styles:{
+	bg: '#fff',            //（可选项）字符串类型；对话框整体背景配置，支持#、rgb、rgba、img；默认：#fff
+	corner: 10,             //（可选项）数字类型；对话框背景圆角大小；默认：2
+	w: 300,                //（可选项）数字类型；对话框的宽；默认：300
+	title:{                //（可选项）JSON对象；弹窗标题栏样式配置，不传则不显示标题区域
+			marginT: 20,       //（可选项）数字类型；标题栏与对话框顶端间距；默认：20
+			icon: 'widget://image/app/molisos.png',          //（可选项）字符串类型；标题前面的图标路径，要求本地路径（widget://、fs://）；图片为正方形的，如：50*50、100*100，建议开发者传大小合适的图片以适配高分辨率手机屏幕，不传则不显示
+			iconSize: 80,      //（可选项）数字类型；icon 图标边长大小,若 icon 不存在则此参数无效；默认：24
+			titleSize: 14,     //（可选项）数字类型；标题字体大小；默认：14
+			titleColor: '#000' //（可选项）字符串类型；标题字体颜色，支持#、rgb、rgba；默认：#fff
+	},
+	content:{              //（可选项）JSON 对象；文本内容配置，若不传则不显示该区域
+			marginT: 20,       //（可选项）数字类型；内容文本顶端与标题栏底端的距离，如果标题栏不存在，则是到窗口顶端的距离；默认：20
+			marginB: 40,       //（可选项）数字类型；内容文本底端与 left/right 顶端的距离，如果 left/right 都不存在，则是到对话框底端的距离；默认：20
+			color: '#ff0103',     //（可选项）字符串类型；内容文本字体颜色，支持 rgb、rgba、#；默认：#eee
+			size: 12           //（可选项）数字类型：内容文本字体大小；默认：12
+	},
+     left:{                 //（可选项）JSON 对象；左边按钮样式配置，不传则不显示左边按钮
+			marginB: 30,        //（可选项）数字类型；左边按钮的下边距；默认：7
+			marginL: 30,       //（可选项）数字类型；左边按钮的左边距；默认：20
+			w: 100,            //（可选项）数字类型；左边按钮的宽；默认：130
+			h: 40,             //（可选项）数字类型；左边按钮的高；默认：35
+			corner: 10,         //（可选项）数字类型；左边按钮圆角半径；默认：0.0
+			bg: '#3d3d3d',        //（可选项）字符串类型；左边按钮的背景，支持rgb、rgba、#、img；默认：'#e0e'
+			color: '#fff',  //（可选项）字符串类型；左边按钮标题字体颜色，支持rgb，rgba、#；默认：'#007FFF'
+			size: 12           //（可选项）数字类型；左边按钮标题字体大小；默认：12
+	},
+
+	right: {               //（可选项）JSON 对象；右边按钮样式配置，不传则不显示右边按钮
+			marginB: 30,        //（可选项）数字类型；右边按钮的下边距；默认：7
+			marginL: 30,      //（可选项）数字类型；右边按钮左边距；默认：10
+			w: 100,            //（可选项）数字类型；右边按钮的宽；默认：130
+			h: 40,             //（可选项）数字类型；右边按钮的高；默认：35
+			corner: 10,         //（可选项）数字类型；右边按钮圆角半径；默认：0.0
+			bg: '#ff0103',        //（可选项）字符串类型；右边按钮的背景，支持rgb、rgba、#、img；默认：'#e0e'
+			color: '#fff',  //（可选项）字符串类型；右边按钮标题字体颜色，支持rgb、rgba、#；默认：'#007FFF'
+			size: 12           //（可选项）数字类型；右边按钮标题字体大小；默认：12
+	}
+}
+		}, function(ret) {
+
+				if (ret.eventType == 'left') {
+						var dialogBox = api.require('dialogBox');
+						dialogBox.close({
+								dialogName: 'alert'
+						});
+				}else
+
+				if (ret.eventType == 'right') {
+
+
+
+									//关闭弹窗
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+											dialogName: 'alert'
+									});
+
+									 //确认清除 执行命令
+											api.ajax({
+										        url:'http://ys.lshang.cn/login/login/deljilu?uid=' + localStorage.getItem('user_id')
+									        },function(ret,err){
+									        	//coding...
+									        });
+									        api.execScript({
+									        	frameName: "look_record_list",
+										        script: 'update();'
+									        });
+
+
+														//重新打开页面  相当于刷新页面
+													api.openFrame({
+										          name: 'look_record_list',
+										          url: 'look_record_list.html',
+									          });
+
+
+									api.toast({
+											msg: '观看记录已经清空',
+											duration: 2000
+									});
+
+
+
+				}
+		});
+		/*    代理升级客服弹窗提示结束    */
+
+	}
+	/////////////清除记录弹窗确认 方法  clearR_Confirm   E   ////////////
+
+
+</script>
+</html>
